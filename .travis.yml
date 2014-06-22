@@ -20,4 +20,6 @@ before_script:
   - composer install
   - wget http://www.phing.info/get/phing-latest.phar
 
-script: php phing-latest.phar
+script:
+  - php phing-latest.phar
+  - bin/atoum --test-all
