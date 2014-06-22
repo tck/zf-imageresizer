@@ -22,4 +22,3 @@ before_script:
 
 script:
   - php phing-latest.phar
-  - bin/atoum --test-all
