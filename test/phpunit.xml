@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./Bootstrap.php">
+    <testsuites>
+        <testsuite name="TckImageResizer controller test suite">
+            <directory>./TckImageResizerTest/Controller</directory>
+        </testsuite>
+        <testsuite name="TckImageResizer service test suite">
+            <directory>./TckImageResizerTest/Service</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

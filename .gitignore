@@ -1,0 +1,4 @@
+data
+vendor
+composer.lock
+phing*.phar
