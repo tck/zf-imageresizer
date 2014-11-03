@@ -7,5 +7,15 @@
         <testsuite name="TckImageResizer service test suite">
             <directory>./TckImageResizerTest/Service</directory>
         </testsuite>
+        <testsuite name="TckImageResizer util test suite">
+            <directory>./TckImageResizerTest/Util</directory>
+        </testsuite>
     </testsuites>
+    <filter>
+        <blacklist>
+            <directory suffix=".php">./../vendor</directory>
+            <directory suffix=".php">./../test</directory>
+            <file>./../Module.php</file>
+        </blacklist>
+    </filter>
 </phpunit>

@@ -305,4 +305,50 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         
         $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
+
+    /**
+     * @expectedException BadMethodCallException
+     * @expectedExceptionMessage nonexistentcommand
+     */
+    public function testExceptionProcessCustomCommand()
+    {
+        $commands = 'nonexistentcommand';
+        
+        $source = vfsStream::url('public') . '/img/test.jpg';
+        $target = vfsStream::url('public') . '/processed/img/test.$' . $commands . '.jpg';
+        
+        $this->imageProcessing->process($source, $target, $commands);
+    }
+    
+    public function testProcess404()
+    {
+        $commands = 'resize,300,100$404,NotFound,000000,ffffff,300,100';
+        
+        $target = vfsStream::url('public') . '/processed/img/nonexistentimage.$' . $commands . '.jpg.404.png';
+        
+        $this->imageProcessing->process404($target, $commands);
+        
+        $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
+        
+        $this->assertTrue($folder->hasChild('nonexistentimage.$' . $commands . '.jpg.404.png'));
+        
+        $mTimeBefore = $folder->getChild('nonexistentimage.$' . $commands . '.jpg.404.png')->filemtime();
+        
+        sleep(2);
+        
+        $this->imageProcessing->process404($target, $commands);
+        
+        $mTimeAfter = $folder->getChild('nonexistentimage.$' . $commands . '.jpg.404.png')->filemtime();
+        
+        $this->assertTrue($mTimeBefore === $mTimeAfter);
+        
+        
+        $noSizeCommands = 'blur';
+        
+        $noSizeTarget = vfsStream::url('public') . '/processed/img/nonexistentimage.$' . $noSizeCommands . '.jpg.404.png';
+        
+        $this->imageProcessing->process404($noSizeTarget, $noSizeCommands);
+        
+        $this->assertTrue($folder->hasChild('nonexistentimage.$' . $noSizeCommands . '.jpg.404.png'));
+    }
 }

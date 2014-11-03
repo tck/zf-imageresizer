@@ -85,6 +85,14 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(CommandRegistry::hasCommand('test'));
         $this->assertFalse(CommandRegistry::hasCommand('testabc'));
     }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testExceptionHasCommandParamWrong()
+    {
+        CommandRegistry::hasCommand('');
+    }
     
     public function testGetCommands()
     {

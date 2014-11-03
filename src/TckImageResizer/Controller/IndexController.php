@@ -72,29 +72,35 @@ class IndexController extends AbstractActionController
                 . $this->params('file')
                 . '.' . $this->params('extension');
         
+        $targetExtension = $this->params('extension');
         if (!file_exists($source)) {
-            return $this->notFoundAction();
+            $source = null;
+            $targetExtension .= '.404.png';
         }
         
         $target = $this->publicDirectory . '/processed/'
                 . $this->params('file')
                 . '.$' . $this->params('command')
-                . '.' . $this->params('extension');
+                . '.' . $targetExtension;
         
-        $this->getImageProcessing()->process($source, $target, $this->params('command'));
+        if ($source) {
+            $this->getImageProcessing()->process($source, $target, $this->params('command'));
+            
+        } else {
+            $this->getImageProcessing()->process404($target, $this->params('command'));
+        }
         
         $imageInfo = getimagesize($target);
         $mimeType = $imageInfo['mime'];
         
         $response = $this->getResponse();
         $response->setContent(file_get_contents($target));
+        $response->setStatusCode($source ? 200 : 404);
         $response
             ->getHeaders()
             ->addHeaderLine('Content-Transfer-Encoding', 'binary')
             ->addHeaderLine('Content-Type', $mimeType);
-
+        
         return $response;
     }
-    
 }
-

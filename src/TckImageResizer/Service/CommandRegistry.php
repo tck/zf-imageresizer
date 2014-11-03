@@ -13,6 +13,11 @@ namespace TckImageResizer\Service;
 
 use TckImageResizer\Exception\BadMethodCallException;
 
+/**
+ * self defined command registry
+ * 
+ * @package TckImageResizer
+ */
 class CommandRegistry
 {
     /**

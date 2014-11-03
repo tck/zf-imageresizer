@@ -14,6 +14,9 @@ namespace TckImageResizer\Service;
 use Imagine\Image\AbstractImagine;
 use Imagine\Image\ImageInterface;
 use Imagine\Image\Box;
+use Imagine\Image\Point;
+use Imagine\Image\Palette\RGB;
+use TckImageResizer\Util\UrlSafeBase64;
 use TckImageResizer\Exception\BadMethodCallException;
 
 /**
@@ -88,6 +91,58 @@ class ImageProcessing
             }
             $this->runCustomCommand($command);
         }
+        
+        $this->image->save($target);
+    }
+    
+    /**
+     * Process command to create 404 image and save to target
+     * 
+     * @param string $target
+     * @param string $commands
+     * 
+     * @return void
+     */
+    public function process404($target, $commands)
+    {
+        if (file_exists($target)) {
+            return;
+        }
+        
+        $targetFolder = pathinfo($target, PATHINFO_DIRNAME);
+        if (!file_exists($targetFolder)) {
+            mkdir($targetFolder, 0777, true);
+        }
+        
+        $text = 'Not found';
+        $backgroundColor = null;
+        $color = null;
+        $width = null;
+        $height = null;
+        foreach ($this->analyseCommands($commands) as $command) {
+            if ('thumb' === $command['command'] || 'resize' === $command['command']) {
+                $width = $command['params'][0];
+                $height = $command['params'][1];
+                
+            } elseif ('404' === $command['command']) {
+                if (isset($command['params'][0]) && UrlSafeBase64::valid($command['params'][0])) {
+                    $text = UrlSafeBase64::decode($command['params'][0]);
+                }
+                if (isset($command['params'][1])) {
+                    $backgroundColor = $command['params'][1];
+                }
+                if (isset($command['params'][2])) {
+                    $color = $command['params'][2];
+                }
+                if (isset($command['params'][3])) {
+                    $width = $command['params'][3];
+                }
+                if (isset($command['params'][4])) {
+                    $height = $command['params'][4];
+                }
+            }
+        }
+        $this->image404($text, $backgroundColor, $color, $width, $height);
         
         $this->image->save($target);
     }
@@ -267,5 +322,76 @@ class ImageProcessing
         
         $this->image->effects()->blur($sigma);
     }
-}
+    
+    /**
+     * Command image resize
+     * 
+     * @param string $text
+     * @param string $backgroundColor
+     * @param string $color
+     * @param int $width
+     * @param int $height
+     * 
+     * @return void
+     */
+    protected function image404($text, $backgroundColor, $color, $width, $height)
+    {
+        $text = (string) $text;
+        $backgroundColor = (string) $backgroundColor;
+        $color = (string) $color;
+        $width = (int) $width;
+        $height = (int) $height;
+        
+        if (strlen($backgroundColor) != 6 || !preg_match('![0-9abcdef]!i', $backgroundColor)) {
+            $backgroundColor = 'F8F8F8';
+        }
+        if (strlen($color) != 6 || !preg_match('![0-9abcdef]!i', $color)) {
+            $color = '777777';
+        }
+        if ($width <= 0) {
+            $width = 100;
+        }
+        if ($height <= 0) {
+            $height = 100;
+        }
+        
+        $palette = new RGB();
+        $size  = new Box($width, $height);
+        $this->image = $this->getImagineService()->create($size, $palette->color('#' . $backgroundColor, 0));
 
+        if ($text) {
+            $this->drawCenteredText($text, $color);
+        }
+    }
+    
+    /**
+     * Draw centered text in current image
+     * 
+     * @param string $text
+     * @param string $color
+     * 
+     * @return void
+     */
+    protected function drawCenteredText($text, $color)
+    {
+        $width = $this->image->getSize()->getWidth();
+        $height = $this->image->getSize()->getHeight();
+        $fontColor = $this->image->palette()->color('#' . $color);
+        $fontSize = 48;
+        $widthFactor = $width > 160 ? 0.8 : 0.9;
+        $heightFactor = $height > 160 ? 0.8 : 0.9;
+        do {
+            $font = $this->getImagineService()
+              ->font(__DIR__ . '/../../../data/font/Roboto-Regular.ttf', $fontSize, $fontColor);
+            $fontBox = $font->box($text);
+            $fontSize = round($fontSize * 0.8);
+            
+        } while ($fontSize > 5
+          && ($width * $widthFactor < $fontBox->getWidth() || $height * $heightFactor < $fontBox->getHeight()));
+
+        $pointX = max(0, floor(($width - $fontBox->getWidth()) / 2));
+        $pointY = max(0, floor(($height - $fontBox->getHeight()) / 2));
+        
+        $this->image->draw()->text($text, $font, new Point($pointX, $pointY));
+    }
+}
