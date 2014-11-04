@@ -1,4 +1,4 @@
-## TckImageResizer
+## ImageResizer
 
 [![Build Status](https://travis-ci.org/tck/zf2-imageresizer.svg?branch=master)](https://travis-ci.org/tck/zf2-imageresizer)
 [![Latest Stable Version](https://poser.pugx.org/tck/zf2-imageresizer/v/stable.png)](https://packagist.org/packages/tck/zf2-imageresizer)
@@ -70,6 +70,7 @@ Example: Create a thumbnail and grayscale image
 * colorize(hexColor)
 * sharpen
 * blur(sigma = 1)
+* 404(text[, backgroundColor[, color[, width[, height]]]]) - 404 individual image [text: url-safe base64]
 
 Own commands possible - example place a watermark (Todo Documentation)
 
