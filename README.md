@@ -59,6 +59,19 @@ Example: Create a thumbnail and grayscale image
 * img/logo.jpg
 * `processed/`img/logo`.$thumb,160,120$grayscale`.jpg
 
+#### View helper
+ZF2 tempalte:
+
+```php
+<img alt="Example image" src="<?php echo $this->resize('img/logo.jpg')->thumb(200, 160)->grayscale(); ?>" />
+```
+
+Rendered HTML:
+
+```php
+<img alt="Example image" src="/processed/img/logo.$thumb,200,160$grayscale.jpg" />
+```
+
 
 #### Command list
 
@@ -70,15 +83,15 @@ Example: Create a thumbnail and grayscale image
 * colorize(hexColor)
 * sharpen
 * blur(sigma = 1)
-* 404(text[, backgroundColor[, color[, width[, height]]]]) - 404 individual image [text: url-safe base64]
+* 404(text = 'Not found', backgroundColor = 'F8F8F8', color = '777777', width = null, height = null) 
+ - 404 individual image [text: url-safe base64] - \TckImageResizer\Util\UrlSafeBase64::encode($text)
 
 Own commands possible - example place a watermark (Todo Documentation)
 
 
 ### Goals / Todos
 
-* View Helper
 * More commands
 * More command options
 * Administrative functions
-* ...
+* Create placeholder

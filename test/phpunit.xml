@@ -10,6 +10,9 @@
         <testsuite name="TckImageResizer util test suite">
             <directory>./TckImageResizerTest/Util</directory>
         </testsuite>
+        <testsuite name="TckImageResizer view test suite">
+            <directory>./TckImageResizerTest/View</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <blacklist>
