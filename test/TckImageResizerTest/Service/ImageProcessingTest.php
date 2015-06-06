@@ -345,7 +345,8 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         
         $noSizeCommands = 'blur';
         
-        $noSizeTarget = vfsStream::url('public') . '/processed/img/nonexistentimage.$' . $noSizeCommands . '.jpg.404.png';
+        $noSizeTarget = vfsStream::url('public')
+            . '/processed/img/nonexistentimage.$' . $noSizeCommands . '.jpg.404.png';
         
         $this->imageProcessing->process404($noSizeTarget, $noSizeCommands);
         

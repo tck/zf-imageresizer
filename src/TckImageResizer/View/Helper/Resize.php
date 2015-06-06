@@ -74,7 +74,7 @@ class Resize extends AbstractHelper
         return $this;
     }
     
-    public function _404($text = null, $backgroundColor = null, $color = null, $width = null, $height = null)
+    public function x404($text = null, $backgroundColor = null, $color = null, $width = null, $height = null)
     {
         $this->commands .= '$404'
                 . ($text !== null ? ',' . UrlSafeBase64::encode($text) : '')
@@ -88,9 +88,11 @@ class Resize extends AbstractHelper
 
     public function __toString()
     {
-        return $this->getView()->basePath('processed/'
-                . ($this->imgParts['dirname'] && $this->imgParts['dirname'] !== '.' ? $this->imgParts['dirname'] . '/' : '')
-                . $this->imgParts['filename'] . '.'
-                . $this->commands . '.' . $this->imgParts['extension']);
+        return $this->getView()->basePath(
+            'processed/'
+            . ($this->imgParts['dirname'] && $this->imgParts['dirname'] !== '.' ? $this->imgParts['dirname'] . '/' : '')
+            . $this->imgParts['filename'] . '.'
+            . $this->commands . '.' . $this->imgParts['extension']
+        );
     }
 }

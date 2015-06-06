@@ -23,7 +23,7 @@ class ResizeTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->view = new PhpRenderer();
-        $this->view->getHelperPluginManager()->get('basePath')->setBasePath('/'); 
+        $this->view->getHelperPluginManager()->get('basePath')->setBasePath('/');
 
         $this->helper = new Resize();
         $this->helper->setView($this->view);
@@ -101,7 +101,9 @@ class ResizeTest extends PHPUnit_Framework_TestCase
     
     public function test404()
     {
-        $actual = $this->helper->__invoke('test.jpg')->_404('File not found', 'ffffff', 'ff00ff', 400, 200)->__toString();
+        $actual = $this->helper->__invoke('test.jpg')
+            ->x404('File not found', 'ffffff', 'ff00ff', 400, 200)
+            ->__toString();
         
         $this->assertEquals('/processed/test.$404,RmlsZSBub3QgZm91bmQ,ffffff,ff00ff,400,200.jpg', $actual);
     }

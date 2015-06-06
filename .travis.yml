@@ -9,12 +9,12 @@ before_script:
   - composer update --prefer-source
 
 script:
-  - ./vendor/bin/phpunit --coverage-clover ./build/clover.xml
+  - ./vendor/bin/phpunit
   - ./vendor/bin/phpcs --standard=PSR2 ./src/ ./test/
 
 after_script:
   - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/clover.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != 'hhvm' ] && [ $TRAVIS_PHP_VERSION != '7' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
 
 notifications:
   email: false

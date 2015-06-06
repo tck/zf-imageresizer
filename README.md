@@ -83,8 +83,9 @@ Rendered HTML:
 * colorize(hexColor)
 * sharpen
 * blur(sigma = 1)
-* 404(text = 'Not found', backgroundColor = 'F8F8F8', color = '777777', width = null, height = null) 
- - 404 individual image [text: url-safe base64] - \TckImageResizer\Util\UrlSafeBase64::encode($text)
+* 404(text = 'Not found', backgroundColor = 'F8F8F8', color = '777777', width = null, height = null)
+	In view helper: ->x404(...)
+	[text: url-safe base64] - \TckImageResizer\Util\UrlSafeBase64::encode($text)
 
 Own commands possible - example place a watermark (Todo Documentation)
 

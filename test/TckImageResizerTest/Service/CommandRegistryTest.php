@@ -31,7 +31,8 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     
     public function testRegisterIsCallable()
     {
-        $commandRegistry = CommandRegistry::register('test', function () {});
+        $commandRegistry = CommandRegistry::register('test', function () {
+        });
         
         $this->assertInstanceOf('TckImageResizer\Service\CommandRegistry', $commandRegistry);
     }
@@ -41,7 +42,8 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
      */
     public function testExceptionRegisterParamCommand()
     {
-        CommandRegistry::register('', function () {});
+        CommandRegistry::register('', function () {
+        });
     }
 
     /**
@@ -54,7 +56,8 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     
     public function testGetCommand()
     {
-        CommandRegistry::register('test', function () {});
+        CommandRegistry::register('test', function () {
+        });
         
         $command = CommandRegistry::getCommand('test');
         
@@ -80,7 +83,8 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     
     public function testHasCommand()
     {
-        CommandRegistry::register('test', function () {});
+        CommandRegistry::register('test', function () {
+        });
         
         $this->assertTrue(CommandRegistry::hasCommand('test'));
         $this->assertFalse(CommandRegistry::hasCommand('testabc'));
@@ -96,8 +100,10 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     
     public function testGetCommands()
     {
-        CommandRegistry::register('test1', function () {});
-        CommandRegistry::register('test2', function () {});
+        CommandRegistry::register('test1', function () {
+        });
+        CommandRegistry::register('test2', function () {
+        });
         
         $commands = CommandRegistry::getCommands();
 
@@ -105,5 +111,4 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('test2', $commands);
         $this->assertEquals(2, count($commands));
     }
-    
 }
