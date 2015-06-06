@@ -1,0 +1,6 @@
+<ruleset name="TCK Basic">
+ <description>TCK Basic</description>
+
+ <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+ <!-- ... -->
+</ruleset>

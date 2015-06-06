@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./Bootstrap.php">
+<phpunit bootstrap="./Bootstrap.php"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         strict="true"
+         verbose="true">
     <testsuites>
         <testsuite name="TckImageResizer controller test suite">
-            <directory>./TckImageResizerTest/Controller</directory>
+            <directory suffix="Test.php">./TckImageResizerTest/Controller</directory>
         </testsuite>
         <testsuite name="TckImageResizer service test suite">
-            <directory>./TckImageResizerTest/Service</directory>
+            <directory suffix="Test.php">./TckImageResizerTest/Service</directory>
         </testsuite>
         <testsuite name="TckImageResizer util test suite">
-            <directory>./TckImageResizerTest/Util</directory>
+            <directory suffix="Test.php">./TckImageResizerTest/Util</directory>
         </testsuite>
         <testsuite name="TckImageResizer view test suite">
-            <directory>./TckImageResizerTest/View</directory>
+            <directory suffix="Test.php">./TckImageResizerTest/View</directory>
         </testsuite>
     </testsuites>
+  
+    <logging>
+        <log type="coverage-html" target="../build/coverage" title="TckImageResizer"
+             charset="UTF-8" yui="true" highlight="true"
+             lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="../build/logs/clover.xml"/>
+        <log type="coverage-crap4j" target="../build/logs/crap4j.xml"/>
+        <log type="coverage-xml" target="../build/logs/coverage/xml"/>
+        <log type="junit" target="../build/logs/junit.xml" logIncompleteSkipped="false"/>
+    </logging>
+  
     <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./../src</directory>
+        </whitelist>
         <blacklist>
             <directory suffix=".php">./../vendor</directory>
             <directory suffix=".php">./../test</directory>
