@@ -1,9 +1,11 @@
 ## ImageResizer
 
+[![Latest Stable Version](https://poser.pugx.org/tck/zf2-imageresizer/v/stable)](https://packagist.org/packages/tck/zf2-imageresizer)
 [![Build Status](https://travis-ci.org/tck/zf2-imageresizer.svg?branch=master)](https://travis-ci.org/tck/zf2-imageresizer)
-[![Latest Stable Version](https://poser.pugx.org/tck/zf2-imageresizer/v/stable.png)](https://packagist.org/packages/tck/zf2-imageresizer)
-[![Total Downloads](https://poser.pugx.org/tck/zf2-imageresizer/downloads.png)](https://packagist.org/packages/tck/zf2-imageresizer)
-[![License](https://poser.pugx.org/tck/zf2-imageresizer/license.png)](https://packagist.org/packages/tck/zf2-imageresizer)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/?branch=master)
+[![Total Downloads](https://poser.pugx.org/tck/zf2-imageresizer/downloads)](https://packagist.org/packages/tck/zf2-imageresizer)
+[![License](https://poser.pugx.org/tck/zf2-imageresizer/license)](https://packagist.org/packages/tck/zf2-imageresizer)
 
 This ZF2 module, once enabled, allows image resizing and manipulation by url.
 
