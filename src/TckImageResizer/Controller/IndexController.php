@@ -75,7 +75,7 @@ class IndexController extends AbstractActionController
         $targetExtension = $this->params('extension');
         if (!file_exists($source)) {
             $source = null;
-            $targetExtension .= '.404.png';
+            $targetExtension = '404.' . $targetExtension . '.png';
         }
         
         $target = $this->publicDirectory . '/processed/'
