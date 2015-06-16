@@ -324,6 +324,15 @@ class ImageProcessing
     }
     
     /**
+     * Command image version
+     * 
+     * @return void
+     */
+    protected function imageVersion()
+    {
+    }
+    
+    /**
      * Command image resize
      * 
      * @param string $text
