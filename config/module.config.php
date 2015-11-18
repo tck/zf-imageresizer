@@ -51,4 +51,9 @@ return array(
             'TckImageResizer\Controller\Index' => 'TckImageResizer\Controller\IndexControllerFactory',
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'resize' => 'TckImageResizer\View\Helper\Resize'
+        ),
+    ),
 );
