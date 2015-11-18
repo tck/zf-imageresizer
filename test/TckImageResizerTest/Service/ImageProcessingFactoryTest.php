@@ -17,7 +17,9 @@ use PHPUnit_Framework_TestCase;
 
 class ImageProcessingFactoryTest extends PHPUnit_Framework_TestCase
 {
+    /** @var  serviceManager */
     protected $serviceManager;
+    /** @var  ImageProcessingFactory */
     protected $imageProcessingFactory;
 
     protected function setUp()

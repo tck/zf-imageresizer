@@ -17,12 +17,16 @@ use TckImageResizer\Service\CommandRegistry;
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamWrapper;
+use TckImageResizer\Exception\BadMethodCallException;
 
 class ImageProcessingTest extends PHPUnit_Framework_TestCase
 {
+    /** @var  \Zend\ServiceManager\ServiceManager */
     protected $serviceManager;
     protected $fileSystem;
+    /** @var  \Imagine\Gd\Imagine */
     protected $imagine;
+    /** @var  ImageProcessing */
     protected $imageProcessing;
 
     protected function setUp()

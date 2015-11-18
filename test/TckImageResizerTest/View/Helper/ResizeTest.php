@@ -17,7 +17,9 @@ use Zend\View\Renderer\PhpRenderer;
 
 class ResizeTest extends PHPUnit_Framework_TestCase
 {
+    /** @var  PhpRenderer */
     protected $view;
+    /** @var  Resize */
     protected $helper;
 
     protected function setUp()

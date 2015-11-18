@@ -17,7 +17,9 @@ use PHPUnit_Framework_TestCase;
 
 class IndexControllerFactoryTest extends PHPUnit_Framework_TestCase
 {
+    /** @var  \Zend\Mvc\Controller\ControllerManager */
     protected $controllerManager;
+    /** @var  IndexControllerFactory */
     protected $controllerFactory;
 
     protected function setUp()

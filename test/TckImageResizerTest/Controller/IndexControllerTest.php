@@ -23,10 +23,15 @@ use org\bovigo\vfs\vfsStream;
 
 class IndexControllerTest extends PHPUnit_Framework_TestCase
 {
+    /** @var  IndexController */
     protected $controller;
+    /** @var  Request */
     protected $request;
+    /** @var  RouteMatch */
     protected $routeMatch;
+    /** @var  MvcEvent */
     protected $event;
+    /** @var  \org\bovigo\vfs\vfsStreamDirectory */
     protected $fileSystem;
 
     protected function setUp()
@@ -39,7 +44,8 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
             ),
             'processed' => array(),
         ));
-        
+
+        /** @var \TckImageResizer\Service\ImageProcessing $imageProcessing */
         $imageProcessing = $serviceManager->get('TckImageResizer\Service\ImageProcessing');
         $this->controller = new IndexController($imageProcessing, vfsStream::url('public'));
         $this->request    = new Request();

@@ -34,8 +34,9 @@ class IndexController extends AbstractActionController
     
     /**
      * constructor
-     * 
-     * @param ImageProcessing
+     *
+     * @param ImageProcessing $imageProcessing
+     * @param string $publicDirectory
      */
     public function __construct(ImageProcessing $imageProcessing, $publicDirectory = 'public')
     {
@@ -45,8 +46,9 @@ class IndexController extends AbstractActionController
     
     /**
      * set the image processing service
-     * 
-     * @param ImageProcessing
+     *
+     * @param ImageProcessing $imageProcessing
+     * @return $this
      */
     public function setImageProcessing(ImageProcessing $imageProcessing)
     {
@@ -64,8 +66,10 @@ class IndexController extends AbstractActionController
     {
         return $this->imageProcessing;
     }
-    
-    
+
+    /**
+     * @return \Zend\Http\Response
+     */
     public function resizeAction()
     {
         $source = $this->publicDirectory . '/'
@@ -92,7 +96,8 @@ class IndexController extends AbstractActionController
         
         $imageInfo = getimagesize($target);
         $mimeType = $imageInfo['mime'];
-        
+
+        /** @var \Zend\Http\Response $response */
         $response = $this->getResponse();
         $response->setContent(file_get_contents($target));
         $response->setStatusCode($source ? 200 : 404);

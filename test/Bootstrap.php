@@ -13,9 +13,10 @@ chdir(realpath(__DIR__ . '/../../../'));
 
 class Bootstrap
 {
+    /** @var  ServiceManager */
     protected static $serviceManager;
-    protected static $config;
-    protected static $bootstrap;
+    /** @var  array */
+    protected static $config = array();
 
     public static function init()
     {
@@ -60,11 +61,17 @@ class Bootstrap
         static::$config = $config;
     }
 
+    /**
+     * @return ServiceManager
+     */
     public static function getServiceManager()
     {
         return static::$serviceManager;
     }
 
+    /**
+     * @return array
+     */
     public static function getConfig()
     {
         return static::$config;
@@ -100,6 +107,10 @@ class Bootstrap
         ));
     }
 
+    /**
+     * @param $path
+     * @return bool|string
+     */
     protected static function findParentPath($path)
     {
         $dir = __DIR__;
