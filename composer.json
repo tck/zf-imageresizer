@@ -42,7 +42,8 @@
         "phpmd/phpmd": "2.*",
         "sebastian/phpcpd": "2.*",
         "theseer/phpdox": "0.7.*",
-        "nikic/php-parser": "<1.2.0"
+        "nikic/php-parser": "<1.2.0",
+        "zendframework/zend-serializer": "~2.5"
     },
     "autoload": {
         "psr-0" : {
