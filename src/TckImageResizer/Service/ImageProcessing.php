@@ -49,8 +49,9 @@ class ImageProcessing
     
     /**
      * set the imagine service
-     * 
-     * @param AbstractImagine
+     *
+     * @param AbstractImagine $imagine
+     * @return $this
      */
     public function setImagineService(AbstractImagine $imagine)
     {

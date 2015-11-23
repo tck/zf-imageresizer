@@ -26,11 +26,13 @@ class ImageProcessingFactory implements FactoryInterface
 {
     /**
      * Create Service Factory
-     * 
+     *
      * @param ServiceLocatorInterface $serviceLocator
+     * @return ImageProcessing
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        /** @var \Imagine\Gd\Imagine $imagine */
         $imagine = $serviceLocator->get('TckImageResizerImagine');
 
         $service = new ImageProcessing($imagine);

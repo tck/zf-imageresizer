@@ -23,8 +23,9 @@ class IndexControllerFactory implements FactoryInterface
 {
     /**
      * Create Service Factory
-     * 
-     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @param \Zend\Mvc\Controller\ControllerManager|ServiceLocatorInterface $serviceLocator
+     * @return IndexController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
