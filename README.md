@@ -7,27 +7,28 @@
 [![Total Downloads](https://poser.pugx.org/tck/zf2-imageresizer/downloads)](https://packagist.org/packages/tck/zf2-imageresizer)
 [![License](https://poser.pugx.org/tck/zf2-imageresizer/license)](https://packagist.org/packages/tck/zf2-imageresizer)
 
-This ZF2 module, once enabled, allows image resizing and manipulation by url.
+This Zend Framework module, once enabled, allows image resizing and manipulation by url.
 
 
 ### Requirements
 
-* PHP 5.3+
-* [Zend Framework 2](https://github.com/zendframework/zf2) (> 2.0)
-* [Imagine](http://imagine.readthedocs.org/en/latest/) (> 0.5)
+* PHP 5.6+
+* [Zend Framework 3](https://github.com/zendframework/zendframework) (> 3.0)
+* [Imagine](http://imagine.readthedocs.org/en/latest/) (> 0.6)
 
+> **IMPORTANT! Version notes** 
+> * Version **2.x**: Zend Framework 3, dropped support for Zend Framework 2.
+> * Version **1.x**: Zend Framework 2
 
-### Installation via Composer
+### Installation
 
-Define dependencies in your composer.json file
+Install composer in your project
 
-```json
-{
-	"require": {
-        "tck/zf2-imageresizer": "1.*"
-    }
-}
-```
+    curl -s http://getcomposer.org/installer | php
+
+Then run 
+
+    php composer.phar require tck/zf2-imageresizer
 
 
 ### Post installation

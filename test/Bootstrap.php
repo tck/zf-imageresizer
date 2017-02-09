@@ -50,10 +50,11 @@ class Bootstrap
                 'module_paths' => explode(PATH_SEPARATOR, $zf2ModulePaths),
             ),
         );
-
+        
         $config = ArrayUtils::merge($baseConfig, $testConfig);
-
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        
+        $serviceManagerConfig = new ServiceManagerConfig();
+        $serviceManager = new ServiceManager($serviceManagerConfig->toArray());
         $serviceManager->setService('ApplicationConfig', $config);
         $serviceManager->get('ModuleManager')->loadModules();
 

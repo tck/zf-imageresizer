@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 2
+ * Smart image resizing (and manipulation) by url module for Zend Framework 3
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2015 Tobias Knab

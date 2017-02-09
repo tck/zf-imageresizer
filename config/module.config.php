@@ -1,59 +1,66 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 2
+ * Smart image resizing (and manipulation) by url module for Zend Framework 3
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
- * @copyright Copyright (c) 2014 Tobias Knab
+ * @copyright Copyright (c) 2017 Tobias Knab
  * 
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-return array(
-    'router' => array(
-        'routes' => array(
-            'tckimageresizer' => array(
-                'type'    => 'Literal',
-                'options' => array(
+namespace TckImageResizer;
+
+use Imagine\Gd\Imagine;
+use Zend\Router\Http\Literal;
+use Zend\Router\Http\Regex;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'router' => [
+        'routes' => [
+            'tckimageresizer' => [
+                'type'    => Literal::class,
+                'options' => [
                     'route'    => '/processed',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'TckImageResizer\Controller',
-                        'controller'    => 'Index',
+                    'defaults' => [
+                        'controller'    => Controller\IndexController::class,
                         'action'        => 'index',
-                    ),
-                ),
+                    ],
+                ],
                 'may_terminate' => true,
-                'child_routes' => array(
-                    'resize' => array(
-                        'type' => 'Zend\Mvc\Router\Http\Regex',
-                        'options' => array(
+                'child_routes' => [
+                    'resize' => [
+                        'type' => Regex::class,
+                        'options' => [
                             'regex'    => '/(?<file>.*?)\.\$(?<command>.*)\.(?<extension>[a-zA-Z]+)',
-                            'defaults' => array(
+                            'defaults' => [
                                 'action'     => 'resize',
-                            ),
+                            ],
                             'spec' => '/processed/%file%.$%command%.%extension%',
-                        ),
-                    ),
-                ),
-            ),
-        ),
-    ),
-    'service_manager' => array(
-        'invokables' => array(
-            'TckImageResizerImagine' => 'Imagine\Gd\Imagine',
-        ),
-        'factories' => array(
-            'TckImageResizer\Service\ImageProcessing' => 'TckImageResizer\Service\ImageProcessingFactory',
-        ),
-    ),
-    'controllers' => array(
-        'factories' => array(
-            'TckImageResizer\Controller\Index' => 'TckImageResizer\Controller\IndexControllerFactory',
-        ),
-    ),
-    'view_helpers' => array(
-        'invokables' => array(
-            'resize' => 'TckImageResizer\View\Helper\Resize'
-        ),
-    ),
-);
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'service_manager' => [
+        'aliases' => [
+            'TckImageResizerImagine' => Imagine::class,
+        ],
+        'factories' => [
+            Imagine::class => InvokableFactory::class,
+            Service\ImageProcessing::class => Service\ImageProcessingFactory::class,
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            Controller\IndexController::class => Controller\IndexControllerFactory::class,
+        ],
+    ],
+    'view_helpers' => [
+        'invokables' => [
+            'resize' => View\Helper\Resize::class,
+        ],
+    ],
+];

@@ -1,6 +1,7 @@
 <?php
 return array(
     'modules' => array(
+        'Zend\\Router',
         'TckImageResizer',
     ),
     'module_listener_options' => array(

@@ -1,9 +1,9 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 2
+ * Smart image resizing (and manipulation) by url module for Zend Framework 3
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
- * @copyright Copyright (c) 2014 Tobias Knab
+ * @copyright Copyright (c) 2017 Tobias Knab
  * 
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -12,12 +12,12 @@
 namespace TckImageResizerTest\Controller;
 
 use TckImageResizerTest\Bootstrap;
-use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
+use Zend\Router\Http\TreeRouteStack as HttpRouter;
 use TckImageResizer\Controller\IndexController;
 use Zend\Http\Request;
 use Zend\Http\Response;
 use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStream;
 
@@ -58,7 +58,6 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $this->event->setRouter($router);
         $this->event->setRouteMatch($this->routeMatch);
         $this->controller->setEvent($this->event);
-        $this->controller->setServiceLocator($serviceManager);
     }
     
     public function testResizeActionCanBeAccessed()
