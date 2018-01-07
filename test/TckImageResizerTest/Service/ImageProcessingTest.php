@@ -33,12 +33,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
     {
         $this->serviceManager = Bootstrap::getServiceManager();
         
-        $this->fileSystem = vfsStream::setup('public', null, array(
-            'img' => array(
+        $this->fileSystem = vfsStream::setup('public', null, [
+            'img' => [
                 'test.jpg' => file_get_contents(__DIR__ . '/../../_files/test.jpg'),
-            ),
-            'processed' => array(),
-        ));
+            ],
+            'processed' => [],
+        ]);
         
         $this->imagine = $this->serviceManager->get('TckImageResizerImagine');
         

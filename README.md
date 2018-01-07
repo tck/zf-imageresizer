@@ -37,13 +37,13 @@ Then run
 
     ```php
     <?php
-    return array(
-        'modules' => array(
+    return [
+        'modules' => ]
             // ...
             'TckImageResizer',
-        ),
+        ],
         // ...
-    );
+    ];
     ```
 
 2. Create "processed" folder in "public" folder.

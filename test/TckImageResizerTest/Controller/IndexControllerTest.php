@@ -38,21 +38,21 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
     {
         $serviceManager = Bootstrap::getServiceManager();
         
-        $this->fileSystem = vfsStream::setup('public', null, array(
-            'img' => array(
+        $this->fileSystem = vfsStream::setup('public', null, [
+            'img' => [
                 'test.jpg' => file_get_contents(__DIR__ . '/../../_files/test.jpg'),
-            ),
-            'processed' => array(),
-        ));
+            ],
+            'processed' => [],
+        ]);
 
         /** @var \TckImageResizer\Service\ImageProcessing $imageProcessing */
         $imageProcessing = $serviceManager->get('TckImageResizer\Service\ImageProcessing');
         $this->controller = new IndexController($imageProcessing, vfsStream::url('public'));
         $this->request    = new Request();
-        $this->routeMatch = new RouteMatch(array('controller' => 'index'));
+        $this->routeMatch = new RouteMatch(['controller' => 'index']);
         $this->event      = new MvcEvent();
         $config = $serviceManager->get('Config');
-        $routerConfig = isset($config['router']) ? $config['router'] : array();
+        $routerConfig = isset($config['router']) ? $config['router'] : [];
         $router = HttpRouter::factory($routerConfig);
 
         $this->event->setRouter($router);

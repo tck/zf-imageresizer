@@ -30,7 +30,7 @@ class CommandRegistry
      *
      * @var array
      */
-    protected $commands = array();
+    protected $commands = [];
     
     /**
      * private constructor

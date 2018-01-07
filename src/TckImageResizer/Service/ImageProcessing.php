@@ -157,14 +157,14 @@ class ImageProcessing
      */
     protected function analyseCommands($commands)
     {
-        $commandList = array();
+        $commandList = [];
         foreach (explode('$', $commands) as $commandLine) {
             $params = explode(',', $commandLine);
             $command = array_shift($params);
-            $commandList[] = array(
+            $commandList[] = [
                 'command' => $command,
                 'params' => $params,
-            );
+            ];
         }
         return $commandList;
     }
@@ -182,7 +182,7 @@ class ImageProcessing
         if (!method_exists($this, $method)) {
             return false;
         }
-        call_user_func_array(array($this, $method), $command['params']);
+        call_user_func_array([$this, $method], $command['params']);
         
         return true;
     }
