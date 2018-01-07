@@ -22,13 +22,9 @@ This Zend Framework module, once enabled, allows image resizing and manipulation
 
 ### Installation
 
-Install composer in your project
+Install via composer in your zf project
 
-    curl -s http://getcomposer.org/installer | php
-
-Then run 
-
-    php composer.phar require tck/zf2-imageresizer
+    $ composer require tck/zf2-imageresizer
 
 
 ### Post installation
