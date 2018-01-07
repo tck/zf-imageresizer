@@ -46,8 +46,8 @@
         "zendframework/zend-serializer": "~2.5"
     },
     "autoload": {
-        "psr-0" : {
-            "TckImageResizer": "src/"
+        "psr-4" : {
+            "TckImageResizer": "TckImageResizer/src/"
         },
         "classmap": [
             "./Module.php"
