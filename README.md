@@ -1,7 +1,7 @@
 ## ImageResizer
 
 [![Latest Stable Version](https://poser.pugx.org/tck/zf2-imageresizer/v/stable)](https://packagist.org/packages/tck/zf2-imageresizer)
-[![Build Status](https://travis-ci.org/tck/zf2-imageresizer.svg?branch=master)](https://travis-ci.org/tck/zf2-imageresizer)
+[![Build Status](https://travis-ci.org/tck/zf-imageresizer.svg?branch=master)](https://travis-ci.org/tck/zf-imageresizer)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tck/zf2-imageresizer/?branch=master)
 [![Total Downloads](https://poser.pugx.org/tck/zf2-imageresizer/downloads)](https://packagist.org/packages/tck/zf2-imageresizer)
