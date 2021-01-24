@@ -6,7 +6,7 @@ cache:
 
 env:
   global:
-    - COMPOSER_ARGS="--no-interaction"
+    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs=php"
 
 matrix:
   fast_finish: true
@@ -36,7 +36,7 @@ before_script:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - travis_retry composer install $COMPOSER_ARGS
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS ; fi
