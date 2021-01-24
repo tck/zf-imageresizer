@@ -1,21 +1,21 @@
 language: php
 
 php:
-  - 5.6
-  - 7
-  - 7.1
   - 7.2
+  - 7.3
+  - 7.4
+  - 8
 
 before_script:
   - composer update --prefer-source
 
 script:
   - ./vendor/bin/phpunit
-  - ./vendor/bin/phpcs --standard=PSR2 --ignore="test/Bootstrap.php" ./src/ ./test/
+  - ./vendor/bin/phpcs --standard=PSR2 --ignore="test/Bootstrap.php" ./src/ ./tests/
 
 after_script:
-  - if [ $TRAVIS_PHP_VERSION != '7' ] && [ $TRAVIS_PHP_VERSION != '7.1' ] && [ $TRAVIS_PHP_VERSION != '7.2' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION != '7' ] && [ $TRAVIS_PHP_VERSION != '7.1' ] && [ $TRAVIS_PHP_VERSION != '7.2' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != '7.3' ] && [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != '7.3' ] && [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
 
 notifications:
   email: false

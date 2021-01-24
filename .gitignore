@@ -1,5 +1,6 @@
 data
 vendor
-composer.lock
 phing*.phar
 *.bat
+.idea
+.phpunit.result.cache

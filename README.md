@@ -7,22 +7,23 @@
 [![Total Downloads](https://poser.pugx.org/tck/zf2-imageresizer/downloads)](https://packagist.org/packages/tck/zf2-imageresizer)
 [![License](https://poser.pugx.org/tck/zf2-imageresizer/license)](https://packagist.org/packages/tck/zf2-imageresizer)
 
-This Zend Framework module, once enabled, allows image resizing and manipulation by url.
+This Laminas module, once enabled, allows image resizing and manipulation by url.
 
 
 ### Requirements
 
-* PHP 5.6+
-* [Zend Framework 3](https://github.com/zendframework/zendframework) (> 3.0)
-* [Imagine](http://imagine.readthedocs.org/en/latest/) (> 0.6)
+* PHP 7.2+
+* [Laminas MVC](https://docs.laminas.dev/mvc/)
+* [Imagine](http://imagine.readthedocs.org/en/latest/)
 
-> **IMPORTANT! Version notes** 
+> **IMPORTANT! Version notes**
+> * Version **3.x**: Laminas, dropped support for Zend Framework 3.
 > * Version **2.x**: Zend Framework 3, dropped support for Zend Framework 2.
 > * Version **1.x**: Zend Framework 2
 
 ### Installation
 
-Install via composer in your zf project
+Install via composer in your Laminas project
 
     $ composer require tck/zf2-imageresizer
 
@@ -59,7 +60,7 @@ Example: Create a thumbnail and grayscale image
 * `processed/`img/logo`.$thumb,160,120$grayscale`.jpg
 
 #### View helper
-ZF2 tempalte:
+Laminas tempalte:
 
 ```php
 <img alt="Example image" src="<?php echo $this->resize('img/logo.jpg')->thumb(200, 160)->grayscale(); ?>" />

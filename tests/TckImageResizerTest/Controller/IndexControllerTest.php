@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -12,16 +12,16 @@
 namespace TckImageResizerTest\Controller;
 
 use TckImageResizerTest\Bootstrap;
-use Zend\Router\Http\TreeRouteStack as HttpRouter;
+use Laminas\Router\Http\TreeRouteStack as HttpRouter;
 use TckImageResizer\Controller\IndexController;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Router\RouteMatch;
-use PHPUnit_Framework_TestCase;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Router\RouteMatch;
+use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 
-class IndexControllerTest extends PHPUnit_Framework_TestCase
+class IndexControllerTest extends TestCase
 {
     /** @var  IndexController */
     protected $controller;
@@ -34,7 +34,7 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
     /** @var  \org\bovigo\vfs\vfsStreamDirectory */
     protected $fileSystem;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $serviceManager = Bootstrap::getServiceManager();
         
@@ -70,7 +70,7 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
-        $this->assertEquals(200, $response->getStatusCode());
+        self::assertEquals(200, $response->getStatusCode());
     }
     
     public function testResizeActionContentTypeImageJpeg()
@@ -82,8 +82,8 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
 
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
-        
-        $this->assertStringStartsWith('image/jpeg', $response->getHeaders()->get('Content-Type')->getFieldValue());
+
+        self::assertStringStartsWith('image/jpeg', $response->getHeaders()->get('Content-Type')->getFieldValue());
     }
     
     public function testResizeActionResponseFileSignatureJpeg()
@@ -95,8 +95,8 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
 
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($response->getBody(), 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($response->getBody(), 0, 3)); // ÿØÿ
     }
     
     public function testResizeActionFileNotFound()
@@ -109,6 +109,6 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         $result   = $this->controller->dispatch($this->request);
         $response = $this->controller->getResponse();
 
-        $this->assertEquals(404, $response->getStatusCode());
+        self::assertEquals(404, $response->getStatusCode());
     }
 }

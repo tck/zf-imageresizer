@@ -2,7 +2,7 @@
 
 namespace TckImageResizer\View\Helper;
 
-use Zend\View\Helper\AbstractHelper;
+use Laminas\View\Helper\AbstractHelper;
 use TckImageResizer\Util\UrlSafeBase64;
 
 class Resize extends AbstractHelper

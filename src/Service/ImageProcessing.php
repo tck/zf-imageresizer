@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -82,8 +82,8 @@ class ImageProcessing
     public function process($source, $target, $commands)
     {
         $targetFolder = pathinfo($target, PATHINFO_DIRNAME);
-        if (!file_exists($targetFolder)) {
-            mkdir($targetFolder, 0777, true);
+        if (!is_dir($targetFolder) && !mkdir($targetFolder, 0777, true) && !is_dir($targetFolder)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $targetFolder));
         }
         $this->image = $this->getImagineService()->open($source);
         foreach ($this->analyseCommands($commands) as $command) {
@@ -111,8 +111,8 @@ class ImageProcessing
         }
         
         $targetFolder = pathinfo($target, PATHINFO_DIRNAME);
-        if (!file_exists($targetFolder)) {
-            mkdir($targetFolder, 0777, true);
+        if (!is_dir($targetFolder) && !mkdir($targetFolder, 0777, true) && !is_dir($targetFolder)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $targetFolder));
         }
         
         $text = 'Not found';
@@ -292,7 +292,7 @@ class ImageProcessing
      */
     protected function imageColorize($hexColor)
     {
-        if (strlen($hexColor) != 6 || !preg_match('![0-9abcdef]!i', $hexColor)) {
+        if (strlen($hexColor) !== 6 || !preg_match('![0-9abcdef]!i', $hexColor)) {
             throw new BadMethodCallException('Invalid parameter color for command "colorize"');
         }
         $color = $this->image->palette()->color('#' . $hexColor);
@@ -392,7 +392,7 @@ class ImageProcessing
         $heightFactor = $height > 160 ? 0.8 : 0.9;
         do {
             $font = $this->getImagineService()
-              ->font(__DIR__ . '/../../../data/font/Roboto-Regular.ttf', $fontSize, $fontColor);
+              ->font(__DIR__ . '/../../data/font/Roboto-Regular.ttf', $fontSize, $fontColor);
             $fontBox = $font->box($text);
             $fontSize = round($fontSize * 0.8);
             

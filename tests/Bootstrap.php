@@ -1,10 +1,10 @@
 <?php
 namespace TckImageResizerTest;
 
-use Zend\Loader\AutoloaderFactory;
-use Zend\Mvc\Service\ServiceManagerConfig;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\ArrayUtils;
+use Laminas\Loader\AutoloaderFactory;
+use Laminas\Mvc\Service\ServiceManagerConfig;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\ArrayUtils;
 use RuntimeException;
 
 error_reporting(E_ALL | E_STRICT);
@@ -99,7 +99,7 @@ class Bootstrap
         }
 
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'autoregister_zf' => true,
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,

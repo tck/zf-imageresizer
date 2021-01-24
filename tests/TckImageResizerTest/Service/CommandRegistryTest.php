@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -13,11 +13,11 @@ namespace TckImageResizerTest\Service;
 
 use TckImageResizer\Service\CommandRegistry;
 use TckImageResizer\Exception\BadMethodCallException;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class CommandRegistryTest extends PHPUnit_Framework_TestCase
+class CommandRegistryTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         CommandRegistry::destroy();
     }
@@ -25,32 +25,30 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     public function testCommandRegistrySingleton()
     {
         CommandRegistry::destroy();
-        
-        $this->assertInstanceOf('TckImageResizer\Service\CommandRegistry', CommandRegistry::getInstance());
+
+        self::assertInstanceOf('TckImageResizer\Service\CommandRegistry', CommandRegistry::getInstance());
     }
     
     public function testRegisterIsCallable()
     {
         $commandRegistry = CommandRegistry::register('test', function () {
         });
-        
-        $this->assertInstanceOf('TckImageResizer\Service\CommandRegistry', $commandRegistry);
+
+        self::assertInstanceOf('TckImageResizer\Service\CommandRegistry', $commandRegistry);
     }
-    
-    /**
-     * @expectedException BadMethodCallException
-     */
+
     public function testExceptionRegisterParamCommand()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+
         CommandRegistry::register('', function () {
         });
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testExceptionRegisterParamCallback()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+
         CommandRegistry::register('test', '');
     }
     
@@ -60,24 +58,22 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
         });
         
         $command = CommandRegistry::getCommand('test');
-        
-        $this->assertTrue(is_callable($command));
+
+        self::assertTrue(is_callable($command));
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testExceptionGetCommandParamWrong()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+
         CommandRegistry::getCommand('');
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage testname
-     */
     public function testExceptionGetCommandParamTestname()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!testname!');
+
         CommandRegistry::getCommand('testname');
     }
     
@@ -85,16 +81,15 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
     {
         CommandRegistry::register('test', function () {
         });
-        
-        $this->assertTrue(CommandRegistry::hasCommand('test'));
-        $this->assertFalse(CommandRegistry::hasCommand('testabc'));
+
+        self::assertTrue(CommandRegistry::hasCommand('test'));
+        self::assertFalse(CommandRegistry::hasCommand('testabc'));
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testExceptionHasCommandParamWrong()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+
         CommandRegistry::hasCommand('');
     }
     
@@ -107,8 +102,8 @@ class CommandRegistryTest extends PHPUnit_Framework_TestCase
         
         $commands = CommandRegistry::getCommands();
 
-        $this->assertArrayHasKey('test1', $commands);
-        $this->assertArrayHasKey('test2', $commands);
-        $this->assertEquals(2, count($commands));
+        self::assertArrayHasKey('test1', $commands);
+        self::assertArrayHasKey('test2', $commands);
+        self::assertEquals(2, count($commands));
     }
 }

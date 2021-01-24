@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -14,14 +14,14 @@ namespace TckImageResizerTest\Service;
 use TckImageResizerTest\Bootstrap;
 use TckImageResizer\Service\ImageProcessing;
 use TckImageResizer\Service\CommandRegistry;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamWrapper;
 use TckImageResizer\Exception\BadMethodCallException;
 
-class ImageProcessingTest extends PHPUnit_Framework_TestCase
+class ImageProcessingTest extends TestCase
 {
-    /** @var  \Zend\ServiceManager\ServiceManager */
+    /** @var  \Laminas\ServiceManager\ServiceManager */
     protected $serviceManager;
     protected $fileSystem;
     /** @var  \Imagine\Gd\Imagine */
@@ -29,7 +29,7 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
     /** @var  ImageProcessing */
     protected $imageProcessing;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->serviceManager = Bootstrap::getServiceManager();
         
@@ -48,15 +48,15 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
     public function testGetImagineService()
     {
         $imagine = $this->imageProcessing->getImagineService();
-        
-        $this->assertInstanceOf('Imagine\Image\AbstractImagine', $imagine);
+
+        self::assertInstanceOf('Imagine\Image\AbstractImagine', $imagine);
     }
     
     public function testSetImagineService()
     {
         $imageProcessing = $this->imageProcessing->setImagineService($this->imagine);
-        
-        $this->assertInstanceOf('TckImageResizer\Service\ImageProcessing', $imageProcessing);
+
+        self::assertInstanceOf('TckImageResizer\Service\ImageProcessing', $imageProcessing);
     }
     
     public function testProcessCommandThumb()
@@ -69,27 +69,26 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
         
         $imageInfo = getimagesizefromstring($content);
-        
-        $this->assertEquals(100, $imageInfo[0]);
-        
-        $this->assertGreaterThan(0, $imageInfo[1]);
-        $this->assertLessThan(100, $imageInfo[1]);
+
+        self::assertEquals(100, $imageInfo[0]);
+
+        self::assertGreaterThan(0, $imageInfo[1]);
+        self::assertLessThan(100, $imageInfo[1]);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage thumb
-     */
     public function testExceptionProcessCommandThumbWidth()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!thumb!');
+
         $commands = 'thumb,0,100';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -98,12 +97,11 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage thumb
-     */
     public function testExceptionProcessCommandThumbHeight()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!thumb!');
+
         $commands = 'thumb,100,0';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -122,25 +120,24 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
         
         $imageInfo = getimagesizefromstring($content);
-        
-        $this->assertEquals(100, $imageInfo[0]);
-        $this->assertEquals(100, $imageInfo[1]);
+
+        self::assertEquals(100, $imageInfo[0]);
+        self::assertEquals(100, $imageInfo[1]);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage resize
-     */
     public function testExceptionProcessCommandResizeWidth()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!resize!');
+
         $commands = 'resize,0,100';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -149,12 +146,11 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage resize
-     */
     public function testExceptionProcessCommandResizeHeight()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!resize!');
+
         $commands = 'resize,100,0';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -173,12 +169,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
     
     public function testProcessCommandNegative()
@@ -191,12 +187,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
     
     public function testProcessCommandGamma()
@@ -209,12 +205,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
     
     public function testProcessCommandColorize()
@@ -227,20 +223,19 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage colorize
-     */
     public function testExceptionProcessCommandColorizeColor()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!colorize!');
+
         $commands = 'colorize,nohexcolor';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -259,12 +254,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
     
     public function testProcessCommandBlur()
@@ -277,12 +272,12 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process($source, $target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
     
     public function testProcessCustomCommand()
@@ -298,24 +293,23 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $target = vfsStream::url('public') . '/processed/img/test.$' . $commands . '.jpg';
         
         $this->imageProcessing->process($source, $target, $commands);
-        
-        $this->assertTrue($callCheck);
+
+        self::assertTrue($callCheck);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
+
+        self::assertTrue($folder->hasChild('test.$' . $commands . '.jpg'));
         
         $content = $folder->getChild('test.$' . $commands . '.jpg')->getContent();
-        
-        $this->assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
+
+        self::assertEquals(pack('H*', 'ffd8ff'), substr($content, 0, 3)); // ÿØÿ
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     * @expectedExceptionMessage nonexistentcommand
-     */
     public function testExceptionProcessCustomCommand()
     {
+        $this->expectException(\TckImageResizer\Exception\BadMethodCallException::class);
+        $this->expectExceptionMessageMatches('!nonexistentcommand!');
+
         $commands = 'nonexistentcommand';
         
         $source = vfsStream::url('public') . '/img/test.jpg';
@@ -333,8 +327,8 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process404($target, $commands);
         
         $folder = vfsStreamWrapper::getRoot()->getChild('processed')->getChild('img');
-        
-        $this->assertTrue($folder->hasChild('nonexistentimage.$' . $commands . '.jpg.404.png'));
+
+        self::assertTrue($folder->hasChild('nonexistentimage.$' . $commands . '.jpg.404.png'));
         
         $mTimeBefore = $folder->getChild('nonexistentimage.$' . $commands . '.jpg.404.png')->filemtime();
         
@@ -343,8 +337,8 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
         $this->imageProcessing->process404($target, $commands);
         
         $mTimeAfter = $folder->getChild('nonexistentimage.$' . $commands . '.jpg.404.png')->filemtime();
-        
-        $this->assertTrue($mTimeBefore === $mTimeAfter);
+
+        self::assertTrue($mTimeBefore === $mTimeAfter);
         
         
         $noSizeCommands = 'blur';
@@ -353,7 +347,7 @@ class ImageProcessingTest extends PHPUnit_Framework_TestCase
             . '/processed/img/nonexistentimage.$' . $noSizeCommands . '.jpg.404.png';
         
         $this->imageProcessing->process404($noSizeTarget, $noSizeCommands);
-        
-        $this->assertTrue($folder->hasChild('nonexistentimage.$' . $noSizeCommands . '.jpg.404.png'));
+
+        self::assertTrue($folder->hasChild('nonexistentimage.$' . $noSizeCommands . '.jpg.404.png'));
     }
 }

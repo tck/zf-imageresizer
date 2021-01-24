@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -12,32 +12,32 @@
 namespace TckImageResizerTest\Util;
 
 use TckImageResizer\Util\UrlSafeBase64;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UrlSafeBase64Test extends PHPUnit_Framework_TestCase
+class UrlSafeBase64Test extends TestCase
 {
     public function testEncode()
     {
         $actual = UrlSafeBase64::encode('test');
-        
-        $this->assertEquals('dGVzdA', $actual);
+
+        self::assertEquals('dGVzdA', $actual);
     }
 
     public function testDecode()
     {
         $actual = UrlSafeBase64::decode('dGVzdA');
-        
-        $this->assertEquals('test', $actual);
+
+        self::assertEquals('test', $actual);
     }
     
     public function testVaild()
     {
         $validTrue = UrlSafeBase64::valid('dGVzdA');
-        
-        $this->assertTrue($validTrue);
+
+        self::assertTrue($validTrue);
         
         $validFalse = UrlSafeBase64::valid('test!');
-        
-        $this->assertFalse($validFalse);
+
+        self::assertFalse($validFalse);
     }
 }

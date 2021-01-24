@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -12,9 +12,9 @@
 namespace TckImageResizer;
 
 use Imagine\Gd\Imagine;
-use Zend\Router\Http\Literal;
-use Zend\Router\Http\Regex;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\Router\Http\Literal;
+use Laminas\Router\Http\Regex;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -59,8 +59,11 @@ return [
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
+        'aliases' => [
             'resize' => View\Helper\Resize::class,
+        ],
+        'factories' => [
+            View\Helper\Resize::class => InvokableFactory::class,
         ],
     ],
 ];

@@ -1,6 +1,6 @@
 <?php
 /**
- * Smart image resizing (and manipulation) by url module for Zend Framework 3
+ * Smart image resizing (and manipulation) by url module for Laminas
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
@@ -11,7 +11,7 @@
 
 namespace TckImageResizer\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 use TckImageResizer\Service\ImageProcessing;
 
 /**
@@ -67,7 +67,7 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * @return \Zend\Http\Response
+     * @return \Laminas\Http\Response
      */
     public function resizeAction()
     {
@@ -96,7 +96,7 @@ class IndexController extends AbstractActionController
         $imageInfo = getimagesize($target);
         $mimeType = $imageInfo['mime'];
 
-        /** @var \Zend\Http\Response $response */
+        /** @var \Laminas\Http\Response $response */
         $response = $this->getResponse();
         $response->setContent(file_get_contents($target));
         $response->setStatusCode($source ? 200 : 404);

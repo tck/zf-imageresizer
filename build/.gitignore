@@ -1,5 +1,4 @@
 api
-coverage
+html-coverage
 logs
 pdepend
-phpdox
