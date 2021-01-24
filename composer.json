@@ -56,5 +56,15 @@
         "psr-4": {
             "TckImageResizerTest\\": "./tests/TckImageResizerTest/"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs --standard=PSR2 --ignore=\"tests/TckImageResizerTest/Bootstrap.php\" ./src/ ./tests/",
+        "cs-fix": "phpcbf --standard=PSR2 --ignore=\"tests/TckImageResizerTest/Bootstrap.php\" ./src/ ./tests/",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }
