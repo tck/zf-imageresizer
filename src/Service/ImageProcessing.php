@@ -4,7 +4,7 @@
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
- * 
+ *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
@@ -21,7 +21,7 @@ use TckImageResizer\Exception\BadMethodCallException;
 
 /**
  * Image Processing
- * 
+ *
  * @package TckImageResizer
  */
 class ImageProcessing
@@ -39,7 +39,7 @@ class ImageProcessing
     
     /**
      * constructor
-     * 
+     *
      * @param AbstractImagine
      */
     public function __construct(AbstractImagine $imagine)
@@ -62,7 +62,7 @@ class ImageProcessing
     
     /**
      * Get the imagine service
-     * 
+     *
      * @return AbstractImagine
      */
     public function getImagineService()
@@ -72,11 +72,11 @@ class ImageProcessing
     
     /**
      * Process command to image source and save to target
-     * 
+     *
      * @param string $source
      * @param string $target
      * @param string $commands
-     * 
+     *
      * @return void
      */
     public function process($source, $target, $commands)
@@ -98,10 +98,10 @@ class ImageProcessing
     
     /**
      * Process command to create 404 image and save to target
-     * 
+     *
      * @param string $target
      * @param string $commands
-     * 
+     *
      * @return void
      */
     public function process404($target, $commands)
@@ -124,7 +124,6 @@ class ImageProcessing
             if ('thumb' === $command['command'] || 'resize' === $command['command']) {
                 $width = $command['params'][0];
                 $height = $command['params'][1];
-                
             } elseif ('404' === $command['command']) {
                 if (isset($command['params'][0]) && UrlSafeBase64::valid($command['params'][0])) {
                     $text = UrlSafeBase64::decode($command['params'][0]);
@@ -150,9 +149,9 @@ class ImageProcessing
     
     /**
      * Analyse commands string and returns array with command/params keys
-     * 
+     *
      * @param string $commands
-     * 
+     *
      * @return array
      */
     protected function analyseCommands($commands)
@@ -171,9 +170,9 @@ class ImageProcessing
     
     /**
      * Run command if exists
-     * 
+     *
      * @param array $command
-     * 
+     *
      * @return boolean
      */
     protected function runCommand($command)
@@ -189,9 +188,9 @@ class ImageProcessing
     
     /**
      * Run custom command if exists
-     * 
+     *
      * @param array $command
-     * 
+     *
      * @return boolean
      */
     protected function runCustomCommand($command)
@@ -209,10 +208,10 @@ class ImageProcessing
     
     /**
      * Command image thumb
-     * 
+     *
      * @param int $width
      * @param int $height
-     * 
+     *
      * @return void
      */
     protected function imageThumb($width, $height)
@@ -230,10 +229,10 @@ class ImageProcessing
     
     /**
      * Command image resize
-     * 
+     *
      * @param int $width
      * @param int $height
-     * 
+     *
      * @return void
      */
     protected function imageResize($width, $height)
@@ -251,7 +250,7 @@ class ImageProcessing
     
     /**
      * Command image grayscale
-     * 
+     *
      * @return void
      */
     protected function imageGrayscale()
@@ -261,7 +260,7 @@ class ImageProcessing
     
     /**
      * Command image negative
-     * 
+     *
      * @return void
      */
     protected function imageNegative()
@@ -271,9 +270,9 @@ class ImageProcessing
     
     /**
      * Command image gamma
-     * 
+     *
      * @param float $correction
-     * 
+     *
      * @return void
      */
     protected function imageGamma($correction)
@@ -285,9 +284,9 @@ class ImageProcessing
     
     /**
      * Command image colorize
-     * 
+     *
      * @param string $hexColor
-     * 
+     *
      * @return void
      */
     protected function imageColorize($hexColor)
@@ -302,7 +301,7 @@ class ImageProcessing
     
     /**
      * Command image sharpen
-     * 
+     *
      * @return void
      */
     protected function imageSharpen()
@@ -312,9 +311,9 @@ class ImageProcessing
     
     /**
      * Command image blur
-     * 
+     *
      * @param float $sigma
-     * 
+     *
      * @return void
      */
     protected function imageBlur($sigma = 1)
@@ -326,7 +325,7 @@ class ImageProcessing
     
     /**
      * Command image version
-     * 
+     *
      * @return void
      */
     protected function imageVersion()
@@ -335,13 +334,13 @@ class ImageProcessing
     
     /**
      * Command image resize
-     * 
+     *
      * @param string $text
      * @param string $backgroundColor
      * @param string $color
      * @param int $width
      * @param int $height
-     * 
+     *
      * @return void
      */
     protected function image404($text, $backgroundColor, $color, $width, $height)
@@ -376,10 +375,10 @@ class ImageProcessing
     
     /**
      * Draw centered text in current image
-     * 
+     *
      * @param string $text
      * @param string $color
-     * 
+     *
      * @return void
      */
     protected function drawCenteredText($text, $color)
@@ -395,7 +394,6 @@ class ImageProcessing
               ->font(__DIR__ . '/../../data/font/Roboto-Regular.ttf', $fontSize, $fontColor);
             $fontBox = $font->box($text);
             $fontSize = round($fontSize * 0.8);
-            
         } while ($fontSize > 5
           && ($width * $widthFactor < $fontBox->getWidth() || $height * $heightFactor < $fontBox->getHeight()));
 

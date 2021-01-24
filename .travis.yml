@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.2
   - 7.3
   - 7.4
   - 8
@@ -11,11 +10,11 @@ before_script:
 
 script:
   - ./vendor/bin/phpunit
-  - ./vendor/bin/phpcs --standard=PSR2 --ignore="test/Bootstrap.php" ./src/ ./tests/
+  - ./vendor/bin/phpcs --standard=PSR2 --ignore="tests/TckImageResizerTest/Bootstrap.php" ./src/ ./tests/
 
 after_script:
-  - if [ $TRAVIS_PHP_VERSION != '7.3' ] && [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [ $TRAVIS_PHP_VERSION != '7.3' ] && [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != '7.4' ] && [ $TRAVIS_PHP_VERSION != '8' ]; then php ocular.phar code-coverage:upload --format=php-clover ./build/logs/clover.xml; fi
 
 notifications:
   email: false

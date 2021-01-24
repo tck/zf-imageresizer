@@ -4,7 +4,7 @@
  *
  * @link      http://github.com/tck/zf2-imageresizer for the canonical source repository
  * @copyright Copyright (c) 2017 Tobias Knab
- * 
+ *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
@@ -16,7 +16,7 @@ use TckImageResizer\Service\ImageProcessing;
 
 /**
  * Index controller
- * 
+ *
  * @package TckImageResizer
  */
 class IndexController extends AbstractActionController
@@ -58,7 +58,7 @@ class IndexController extends AbstractActionController
     
     /**
      * Get the image processing service
-     * 
+     *
      * @return ImageProcessing
      */
     public function getImageProcessing()
@@ -88,7 +88,6 @@ class IndexController extends AbstractActionController
         
         if ($source) {
             $this->getImageProcessing()->process($source, $target, $this->params('command'));
-            
         } else {
             $this->getImageProcessing()->process404($target, $this->params('command'));
         }
