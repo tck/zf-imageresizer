@@ -177,7 +177,7 @@ class ImageProcessing
      */
     protected function runCommand($command)
     {
-        $method = 'image' . ucfirst(strtolower($command['command']));
+        $method = 'image' . ucfirst(strtolower((string) $command['command']));
         if (!method_exists($this, $method)) {
             return false;
         }

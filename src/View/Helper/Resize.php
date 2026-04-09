@@ -5,7 +5,7 @@ namespace TckImageResizer\View\Helper;
 use Laminas\View\Helper\AbstractHelper;
 use TckImageResizer\Util\UrlSafeBase64;
 
-class Resize extends AbstractHelper
+class Resize extends AbstractHelper implements \Stringable
 {
     /** @var  array */
     protected $imgParts;
@@ -18,7 +18,7 @@ class Resize extends AbstractHelper
      */
     public function __invoke($imgPath)
     {
-        $this->imgParts = pathinfo($imgPath);
+        $this->imgParts = pathinfo((string) $imgPath);
         $this->commands = '';
         
         return $this;
@@ -134,9 +134,9 @@ class Resize extends AbstractHelper
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->getView()->basePath(
+        return (string) $this->getView()->basePath(
             'processed/'
             . ($this->imgParts['dirname'] && $this->imgParts['dirname'] !== '.' ? $this->imgParts['dirname'] . '/' : '')
             . $this->imgParts['filename'] . '.'

@@ -27,20 +27,14 @@ class IndexController extends AbstractActionController
     protected $imageProcessing;
     
     /**
-     * @var string
-     */
-    protected $publicDirectory;
-    
-    /**
      * constructor
      *
      * @param ImageProcessing $imageProcessing
      * @param string $publicDirectory
      */
-    public function __construct(ImageProcessing $imageProcessing, $publicDirectory = 'public')
+    public function __construct(ImageProcessing $imageProcessing, protected $publicDirectory = 'public')
     {
         $this->setImageProcessing($imageProcessing);
-        $this->publicDirectory = $publicDirectory;
     }
     
     /**

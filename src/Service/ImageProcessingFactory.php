@@ -33,7 +33,7 @@ class ImageProcessingFactory implements FactoryInterface
      * @param  null|array         $options
      * @return ImageProcessing
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return new ImageProcessing($container->get('TckImageResizerImagine'));
     }
